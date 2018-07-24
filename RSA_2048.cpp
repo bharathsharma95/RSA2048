@@ -49,7 +49,7 @@ int test()
 	cout << "C is: " << C << "\n";
 
 
-	ap_uint<1024> M = modexp(C,d,n);					//Message = C^d mod n
+	ap_uint<2048> M = modexp(C,d,n);					//Message = C^d mod n
 	cout << "M is: " << M << "\n";
 
 	cout << "\n\n";
@@ -62,7 +62,7 @@ int test()
 ap_uint<2048> modinv(ap_uint<2048>a, ap_uint<2048>b)
 {
 
-	ap_uint<16> count = 0;
+	ap_int<16> count = 0;
 	ap_uint<2048> temp = 0;
 	//cout<< "\n******************************************\n\n";
 
