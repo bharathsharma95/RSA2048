@@ -4,43 +4,46 @@
 
 using namespace std;
 
+/* Global variables used in the code*/
 ap_uint<2048> temp_arr[20] = {0};
 ap_uint<2048> a_arr[20] = {0};
 ap_uint<2048> b_arr[20] = {0};
 ap_uint<2048> x_arr[20] = {0};
 ap_uint<2048> y_arr[20] = {0};
 
-int test();
 
+/* decleration of functions */
+int test();
 ap_uint<2048> modinv(ap_uint<2048> a, ap_uint<2048> m);
 ap_uint<2048> modexp(ap_uint<2048> base, ap_uint<2048> exp, ap_uint<2048> n_modulus);
 
 int test()
 {
+	/* Two 1024-bit prime numbers to calculate the modulo */
 	ap_uint<1024> p = "203956878356401977405765866929034577280193993314348263094772646453283062722701277632936616063144088173312372882677123879538709400158306567338328279154499698366071906766440037074217117805690872792848149112022286332144876183376326512083574821647933992961249917319836219304274280243803104015000563790123";
 	ap_uint<1024> q = "531872289054204184185084734375133399408303613982130856645299464930952178606045848877129147820387996428175564228204785846141207532462936339834139412401975338705794646595487324365194792822189473092273993580587964571659678084484152603881094176995594813302284232006001752128168901293560051833646881436219";
 
 	cout<< "p is:" << p << "\n";
 	cout<< "q is:" << q << "\n";
 
-	ap_uint<2048> n = p * q;							//n
+	ap_uint<2048> n = p * q;						//n is the modulo
 	cout << "n is: " << n << "\n";
 
 	ap_uint<1024> p_1 = p-1;
 	ap_uint<1024> q_1 = q-1;
 
-	ap_uint<2048> phi_n = p_1 * q_1;					//phi_n
+	ap_uint<2048> phi_n = p_1 * q_1;					//phi_n is the Euler's totient
 	cout << "phi_n is: " << phi_n << "\n";
 
-	ap_uint<2048> e = 65521;							//e
+	ap_uint<2048> e = 65521;						//e is the encryption key (public)
 	cout << "e is: " << e << "\n";
 
-	ap_uint<2048> m = 65;								//m
+	ap_uint<2048> m = 65;							//m is the message to encrypt
 	cout << "m is: " << m << "\n";
 
 
 	cout << "\n****************************************************************************\n";
-	ap_uint<2048> d = modinv(e,phi_n);					//d
+	ap_uint<2048> d = modinv(e,phi_n);					//d is the decryptin key (private)
 	cout << "d is: " << d << "\n";
 	cout << "****************************************************************************\n";
 
@@ -58,7 +61,9 @@ int test()
 }
 
 
-
+/* Function that calculates the modular inverse of 'e' and 'phi_n' and returns the modular inverse
+   which is the decryption key
+*/
 ap_uint<2048> modinv(ap_uint<2048>a, ap_uint<2048>b)
 {
 
@@ -204,7 +209,9 @@ ap_uint<2048> modinv(ap_uint<2048>a, ap_uint<2048>b)
 }
 
 
-
+/* Modular exponentiation function implemented from the paper:
+   https://link.springer.com/chapter/10.1007/978-3-662-47401-3_15
+*/
 ap_uint<2048> modexp(ap_uint<2048> base, ap_uint<2048> exp, ap_uint<2048> n_modulus)
 {
 	ap_uint<2048> Res = 1;
